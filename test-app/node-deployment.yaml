@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: node-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: node
+    template:
+        metadata:
+            labels:
+                component: node
+        spec:
+            containers:
+                - name: node
+                  image: dpmidyett/not-fancy:6a5a4463
+                  ports:
+                    - containerPort: 8082
+                  env:
+                    - name: PGUSER
+                      value: postgres
+                    - name: PGHOST
+                      value: postgres-clusterip-service
+                    - name: PGPORT
+                      value: "5432"
+                    - name: PGDATABASE
+                      value: postgres
+                    - name: PGPASSWORD
+                      value: postgres-password
